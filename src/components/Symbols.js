@@ -1,5 +1,20 @@
+import {useEffect} from 'react'
 
 const Symbols = ({ symbol, id, setalgo, setDisplay, display, algo, isEquals, setisEquals }) => {
+    const handleKeyDown = (e) => {
+        if (e.key === symbol) {
+            updAlgo()
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown)
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [handleKeyDown])
+
+    
     const updAlgo = () => {
 
         if (display === 0) {

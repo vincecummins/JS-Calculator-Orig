@@ -1,9 +1,24 @@
+import {useEffect} from 'react'
 
 const NumberPad = ({ number, setDisplay, id, display, setalgo, algo, isEquals, setisEquals }) => {
+    const handleKeyDown = (e) => {
+        if (e.key === JSON.stringify(number)) {
+            updDisplay()
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown)
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [handleKeyDown])
+
     const updDisplay = () => {
         const regex = /^\D/;
         const regex2 = /\./;
         const regex3 = /\.\d*\D\d*$/
+        console.log(id)
         
         if (display === 0 ) {
             setDisplay('')
@@ -12,7 +27,7 @@ const NumberPad = ({ number, setDisplay, id, display, setalgo, algo, isEquals, s
         if (/\D0$/.test(algo)) {
             return alert('decimal place plz');
         }
-        
+
         if (number === 0) {
             if (isEquals||display === 0) {
                 setDisplay(0)
